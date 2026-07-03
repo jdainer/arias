@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>- JHONDMUSIC</title>
+    <style>
+        /* ===== RESET Y BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: #0a0e17;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 30px 0;
+            background-image: 
+                radial-gradient(ellipse at 20% 50%, rgba(88, 28, 135, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(30, 58, 138, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.8) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            padding: 0 16px;
+        }
+
+        /* ===== HEADER DE CINE ===== */
+        .header-cine {
+            position: relative;
+            width: 100%;
+            margin: 0 0 24px 0;
+            border-radius: 0 0 28px 28px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            padding: 20px 20px 30px 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Efecto de luz de cine */
+        .header-cine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0deg,
+                rgba(255, 215, 0, 0.03) 60deg,
+                transparent 120deg,
+                rgba(138, 43, 226, 0.03) 180deg,
+                transparent 240deg,
+                rgba(30, 58, 138, 0.03) 300deg,
+                transparent 360deg
+            );
+            animation: rotateLight 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateLight {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Líneas de luz de cine */
+        .header-cine::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #ffd700 20%, 
+                #ff6b6b 40%, 
+                #a855f7 60%, 
+                #3b82f6 80%, 
+                transparent 100%
+            );
+            opacity: 0.6;
+            animation: scanline 3s ease-in-out infinite;
+        }
+
+        @keyframes scanline {
+            0%, 100% { opacity: 0.3; transform: scaleX(0.95); }
+            50% { opacity: 1; transform: scaleX(1); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Logo estilo cine */
+        .logo-cine {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 42px;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.2)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.6)); }
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700 0%, #ff6b6b 40%, #a855f7 70%, #3b82f6 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 4s ease-in-out infinite;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .logo-text .sub-title {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-top: 2px;
+        }
+
+        /* Tag de película */
+        .movie-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 16px 6px 12px;
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .movie-tag .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ffd700;
+            animation: blinkDot 1.4s ease-in-out infinite;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .movie-tag span:last-child {
+            color: #ffd700;
+        }
+
+        /* ===== TÍTULO DE SECCIÓN ===== */
+        .section-title {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 4px 0 12px 0;
+            padding: 6px 0;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+        }
+
+        /* ===== GRUPOS ===== */
+        .grupo {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 18px 14px 20px 14px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        .grupo:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        .grupo-titulo {
+            font-size: 15px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            letter-spacing: 1px;
+            padding: 0 2px;
+        }
+
+        .grupo-titulo .badge {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            white-space: nowrap;
+        }
+
+        /* ===== GRID DE SELECTS ===== */
+        .select-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* ===== SELECTS CON COLORES ÚNICOS ===== */
+        .select-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .select-item label {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            padding-left: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .select-item select {
+            width: 100%;
+            padding: 10px 8px 10px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff' stroke-width='1.5' fill='none' stroke-linecap='round' opacity='0.4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+            padding-right: 32px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 46px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .select-item select option {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .select-item select:focus {
+            outline: none;
+            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
+        }
+
+        .select-item select.has-value {
+            border-color: #ffd700;
+            background-color: rgba(255, 215, 0, 0.08);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+        }
+
+        /* ===== COLORES ÚNICOS PARA CADA SELECT ===== */
+        /* Grupo 1 - TONOS MAYORES */
+        .grupo-1 .select-item:nth-child(1) select { border-color: rgba(239, 68, 68, 0.4); }
+        .grupo-1 .select-item:nth-child(1) select:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2); }
+        .grupo-1 .select-item:nth-child(1) select.has-value { border-color: #ef4444; background: rgba(239, 68, 68, 0.12); }
+
+        .grupo-1 .select-item:nth-child(2) select { border-color: rgba(251, 146, 60, 0.4); }
+        .grupo-1 .select-item:nth-child(2) select:focus { border-color: #fb923c; box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.2); }
+        .grupo-1 .select-item:nth-child(2) select.has-value { border-color: #fb923c; background: rgba(251, 146, 60, 0.12); }
+
+        .grupo-1 .select-item:nth-child(3) select { border-color: rgba(234, 179, 8, 0.4); }
+        .grupo-1 .select-item:nth-child(3) select:focus { border-color: #eab308; box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2); }
+        .grupo-1 .select-item:nth-child(3) select.has-value { border-color: #eab308; background: rgba(234, 179, 8, 0.12); }
+
+        .grupo-1 .select-item:nth-child(4) select { border-color: rgba(74, 222, 128, 0.4); }
+        .grupo-1 .select-item:nth-child(4) select:focus { border-color: #4ade80; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2); }
+        .grupo-1 .select-item:nth-child(4) select.has-value { border-color: #4ade80; background: rgba(74, 222, 128, 0.12); }
+
+        .grupo-1 .select-item:nth-child(5) select { border-color: rgba(96, 165, 250, 0.4); }
+        .grupo-1 .select-item:nth-child(5) select:focus { border-color: #60a5fa; box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2); }
+        .grupo-1 .select-item:nth-child(5) select.has-value { border-color: #60a5fa; background: rgba(96, 165, 250, 0.12); }
+
+        .grupo-1 .select-item:nth-child(6) select { border-color: rgba(167, 139, 250, 0.4); }
+        .grupo-1 .select-item:nth-child(6) select:focus { border-color: #a78bfa; box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.2); }
+        .grupo-1 .select-item:nth-child(6) select.has-value { border-color: #a78bfa; background: rgba(167, 139, 250, 0.12); }
+
+        .grupo-1 .select-item:nth-child(7) select { border-color: rgba(244, 114, 182, 0.4); }
+        .grupo-1 .select-item:nth-child(7) select:focus { border-color: #f472b6; box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.2); }
+        .grupo-1 .select-item:nth-child(7) select.has-value { border-color: #f472b6; background: rgba(244, 114, 182, 0.12); }
+
+        /* Grupo 2 - TONOS MENORES */
+        .grupo-2 .select-item:nth-child(1) select { border-color: rgba(248, 113, 113, 0.4); }
+        .grupo-2 .select-item:nth-child(1) select:focus { border-color: #f87171; box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.2); }
+        .grupo-2 .select-item:nth-child(1) select.has-value { border-color: #f87171; background: rgba(248, 113, 113, 0.12); }
+
+        .grupo-2 .select-item:nth-child(2) select { border-color: rgba(252, 211, 77, 0.4); }
+        .grupo-2 .select-item:nth-child(2) select:focus { border-color: #fcd34d; box-shadow: 0 0 0 4px rgba(252, 211, 77, 0.2); }
+        .grupo-2 .select-item:nth-child(2) select.has-value { border-color: #fcd34d; background: rgba(252, 211, 77, 0.12); }
+
+        .grupo-2 .select-item:nth-child(3) select { border-color: rgba(52, 211, 153, 0.4); }
+        .grupo-2 .select-item:nth-child(3) select:focus { border-color: #34d399; box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2); }
+        .grupo-2 .select-item:nth-child(3) select.has-value { border-color: #34d399; background: rgba(52, 211, 153, 0.12); }
+
+        .grupo-2 .select-item:nth-child(4) select { border-color: rgba(147, 197, 253, 0.4); }
+        .grupo-2 .select-item:nth-child(4) select:focus { border-color: #93c5fd; box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.2); }
+        .grupo-2 .select-item:nth-child(4) select.has-value { border-color: #93c5fd; background: rgba(147, 197, 253, 0.12); }
+
+        .grupo-2 .select-item:nth-child(5) select { border-color: rgba(196, 181, 253, 0.4); }
+        .grupo-2 .select-item:nth-child(5) select:focus { border-color: #c4b5fd; box-shadow: 0 0 0 4px rgba(196, 181, 253, 0.2); }
+        .grupo-2 .select-item:nth-child(5) select.has-value { border-color: #c4b5fd; background: rgba(196, 181, 253, 0.12); }
+
+        .grupo-2 .select-item:nth-child(6) select { border-color: rgba(216, 180, 254, 0.4); }
+        .grupo-2 .select-item:nth-child(6) select:focus { border-color: #d8b4fe; box-shadow: 0 0 0 4px rgba(216, 180, 254, 0.2); }
+        .grupo-2 .select-item:nth-child(6) select.has-value { border-color: #d8b4fe; background: rgba(216, 180, 254, 0.12); }
+
+        .grupo-2 .select-item:nth-child(7) select { border-color: rgba(244, 114, 182, 0.4); }
+        .grupo-2 .select-item:nth-child(7) select:focus { border-color: #f472b6; box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.2); }
+        .grupo-2 .select-item:nth-child(7) select.has-value { border-color: #f472b6; background: rgba(244, 114, 182, 0.12); }
+
+        /* ===== RESUMEN ===== */
+        .seleccion-actual {
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .seleccion-actual .valor {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 12px;
+        }
+
+        .seleccion-actual .vacio {
+            color: rgba(255, 255, 255, 0.25);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* ===== FOOTER ===== */
+        .info-footer {
+            text-align: center;
+            margin-top: 8px;
+            padding: 12px;
+        }
+
+        .info-footer span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            letter-spacing: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .info-footer span::before {
+            content: '🎵';
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 400px) {
+            .select-grid {
+                gap: 8px;
+            }
+            .select-item select {
+                padding: 8px 6px 8px 10px;
+                font-size: 12px;
+                min-height: 40px;
+            }
+            .logo-text .main-title {
+                font-size: 22px;
+            }
+            .logo-icon {
+                font-size: 32px;
+            }
+            .grupo {
+                padding: 14px 10px 16px 10px;
+            }
+            .grupo-titulo {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            body {
+                padding: 20px 0 40px 0;
+            }
+            .container {
+                max-width: 560px;
+            }
+            .header-cine {
+                border-radius: 0 0 40px 40px;
+                padding: 30px 30px 36px 30px;
+            }
+            .logo-text .main-title {
+                font-size: 34px;
+            }
+        }
+
+        /* ===== ANIMACIONES EXTRA ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grupo {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .grupo:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        /* Efecto hover en selects */
+        .select-item select:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .select-item select:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER DE CINE ===== -->
+        <header class="header-cine">
+            <div class="header-content">
+                <a class="logo-cine" href="">
+                    <span class="logo-icon">🎷🪗🎺🎸🎻</span>
+                    <div class="logo-text">
+                        <span class="main-title">PLAYLIST WORSHIP</span>
+                        <span class="sub-title">★ JHONDMUSIC★</span>
+                    </div>
+                </a>
+                <div class="movie-tag">
+                    <span class="dot"></span>
+                    <span>🎵 SELECCIÓN DE TONOS</span>
+                    <span>✦</span>
+                    <span>LIVE SESSION</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== GRUPO 1 - TONOS MAYORES ===== -->
+        <div class="section-title">🎹 TONOS MAYORES</div>
+        <div class="grupo grupo-1">
+            <div class="grupo-titulo">
+                <span>✨ MAYORES</span>
+               
+            </div>
+            <div class="select-grid" id="grupo1">
+                <div class="select-item">
+                    <select id="s1_1" data-grupo="1" data-nombre="DO">
+                        <option value="">🎵 DO</option>
+                        <option value="El Espíritu de Dios se mueve">El Espíritu de Dios se mueve</option>
+                        <option value="En ese nombre">En ese nombre</option>
+                        <option value="Qué bueno es Jesucristo">Qué bueno es Jesucristo</option>
+                        <option value="Solamente en Cristo">Solamente en Cristo</option>
+                        <option value="La sangre de Cristo">La sangre de Cristo</option>
+                        <option value="El amor de Dios">El amor de Dios</option>
+                        <option value="El gozo de Jehová">El gozo de Jehová</option>
+                        <option value="Hay una fiesta">Hay una fiesta</option>
+                        <option value="Un altar Encendido">Un altar Encendido</option>
+                        <option value="Si toda Colombia">Si toda Colombia</option>
+                        <option value="Oh qué regalo">Oh qué regalo</option>
+                        <option value="Vamos a alabar">Vamos a alabar</option>
+                        <option value="Ya viene Cristo">Ya viene Cristo</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s1_2" data-grupo="1" data-nombre="RE">
+                        <option value="">🎵 RE</option>
+                        <option value="En esta reunión">En esta reunión</option>
+                        <option value="Espíritu de Dios desciende">Espíritu de Dios desciende</option>
+                        <option value="Los salvados cantan">Los salvados cantan</option>
+                        <option value="Tu misericordia">Tu misericordia</option>
+                        <option value="No hay Dios">No hay Dios</option>
+                        <option value="Hay un pueblo">Hay un pueblo</option>
+                        <option value="Jacob luchó">Jacob luchó</option>
+                        <option value="Mirad bendeciD">Mirad bendeciD</option>
+                        <option value="Mi corazón contento">Mi corazón contento</option>
+                        <option value="Soy libertado">Soy libertado</option>
+                        <option value="El Espíritu Santo que Lleno">El Espíritu Santo que Lleno</option>
+                        <option value="Yo tengo el Cristo vivo">Yo tengo el Cristo vivo</option>
+                        <option value="El culto de hoy">El culto de hoy</option>
+                        <option value="Testifiquemos que solo hay">Testifiquemos que solo hay</option>
+                        <option value="Estamos de fiesta">Estamos de fiesta</option>
+                        <option value="La iglesia es tuya">La iglesia es tuya</option>
+                        <option value="Quién dijo que no">Quién dijo que no</option>
+                        <option value="Si has conocido al Señor">Si has conocido al Señor</option>
+                        <option value="Yo quiero un avivamiento">Yo quiero un avivamiento</option>
+                        <option value="Dale un toque">Dale un toque</option>
+                        <option value="Te alabarán oh Jehová">Te alabarán oh Jehová</option>
+                        <option value="El nombre de Jesús es dulce">El nombre de Jesús es dulce</option>
+                        <option value="Esta es una fiesta">Esta es una fiesta</option>
+                        <option value="Siento que me lleno">Siento que me lleno</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s1_3" data-grupo="1" data-nombre="MI">
+                        <option value="">🎵 MI</option>
+                        <option value="Honra y gloria">Honra y gloria</option>
+                        <option value="Yo siento gozo">Yo siento gozo</option>
+                        <option value="Hay un motivo">Hay un motivo</option>
+                        <option value="Jehová está en su templo">Jehová está en su templo</option>
+                        <option value="Vamos por montes">Vamos por montes</option>
+                        <option value="Soy feliz">Soy feliz</option>
+                        <option value="El es el gran yo soy">El es el gran yo soy</option>
+                        <option value="Una vez andaba yo">Una vez andaba yo</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s1_4" data-grupo="1" data-nombre="FA">
+                        <option value="">🎵 FA</option>
+                        <option value="NO HAY CANCIONES EN ESTE TONO">🚫 NO HAY CANCIONES</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s1_5" data-grupo="1" data-nombre="SOL">
+                        <option value="">🎵 SOL</option>
+                        <option value="Es un canto de Libertad">Es un canto de Libertad</option>
+                        <option value="La fuente">La fuente</option>
+                        <option value="Mirad cuán bueno">Mirad cuán bueno</option>
+                        <option value="Si mi pueblo se humilla">Si mi pueblo se humilla</option>
+                        <option value="Si quito la mirada">Si quito la mirada</option>
+                        <option value="Viva el evangelio">Viva el evangelio</option>
+                        <option value="Yo siento en mí">Yo siento en mí</option>
+                        <option value="Yo quiero sentir">Yo quiero sentir</option>
+                        <option value="El Cristo de poder">El Cristo de poder</option>
+                        <option value="Yo vine a adorar a Dios">Yo vine a adorar a Dios</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s1_6" data-grupo="1" data-nombre="LA">
+                        <option value="">🎵 LA</option>
+                        <option value="Estoy alegre">Estoy alegre</option>
+                        <option value="La dulce presencia">La dulce presencia</option>
+                        <option value="Por todo el mundo">Por todo el mundo</option>
+                        <option value="Yo vengo a tu presencia">Yo vengo a tu presencia</option>
+                        <option value="Gracias Señor">Gracias Señor</option>
+                        <option value="Quién como tú">Quién como tú</option>
+                        <option value="Damos gracias al Señor">Damos gracias al Señor</option>
+                        <option value="Yo vivo porque Cristo">Yo vivo porque Cristo</option>
+                        <option value="Oh qué alegría">Oh qué alegría</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s1_7" data-grupo="1" data-nombre="SI">
+                        <option value="">🎵 SI</option>
+                        <option value="NO HAY CANCIONES EN ESTE TONO">🚫 NO HAY CANCIONES</option>
+                    </select>
+                </div>
+            </div>
+           
+            </div>
+        </div>
+
+        <!-- ===== GRUPO 2 - TONOS MENORES ===== -->
+        <div class="section-title">🎹 TONOS MENORES</div>
+        <div class="grupo grupo-2">
+            <div class="grupo-titulo">
+                <span>🌙 MENORES</span>
+                
+            </div>
+            <div class="select-grid" id="grupo2">
+                <div class="select-item">
+                    <select id="s2_1" data-grupo="2" data-nombre="DOm">
+                        <option value="">🎵 DO MENOR</option>
+                        <option value="Este avivamiento">Este avivamiento</option>
+                        <option value="Esta alabanza es">Esta alabanza es</option>
+                        <option value="Qué bonito es">Qué bonito es</option>
+                        <option value="Yo he creído">Yo he creído</option>
+                        <option value="Te espero">Te espero</option>
+                        <option value="Gocémonos Y Alegremonos">Gocémonos Y Alegremonos</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s2_2" data-grupo="2" data-nombre="REm">
+                        <option value="">🎵 RE MENOR</option>
+                        <option value="Vamos a romper">Vamos a romper</option>
+                        <option value="Adoremos al Rey">Adoremos al Rey</option>
+                        <option value="Santo dicen">Santo dicen</option>
+                        <option value="La alabanza a Dios">La alabanza a Dios</option>
+                        <option value="En el altar de Dios">En el altar de Dios</option>
+                        <option value="Para ti oh Señor">Para ti oh Señor</option>
+                        <option value="La fortaleza">La fortaleza</option>
+                        <option value="El Cristo de Nazaret">El Cristo de Nazaret</option>
+                        <option value="Enviado soy de Dios">Enviado soy de Dios</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s2_3" data-grupo="2" data-nombre="MIm">
+                        <option value="">🎵 MI MENOR</option>
+                        <option value="Jesucristo es tan grande">Jesucristo es tan grande</option>
+                        <option value="El León de Judá">El León de Judá</option>
+                        <option value="Sin Dios nada somos">Sin Dios nada somos</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s2_4" data-grupo="2" data-nombre="FAm">
+                        <option value="">🎵 FA MENOR</option>
+                        <option value="NO HAY CANCIONES EN ESTE TONO">🚫 NO HAY CANCIONES</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s2_5" data-grupo="2" data-nombre="SOLm">
+                        <option value="">🎵 SOL MENOR</option>
+                        <option value="NO HAY CANCIONES EN ESTE TONO">🚫 NO HAY CANCIONES</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s2_6" data-grupo="2" data-nombre="LAm">
+                        <option value="">🎵 LA MENOR</option>
+                        <option value="La única razón">La única razón</option>
+                        <option value="Todo lo que respire">Todo lo que respire</option>
+                        <option value="Hay muchas formas">Hay muchas formas</option>
+                    </select>
+                </div>
+                <div class="select-item">
+                    <select id="s2_7" data-grupo="2" data-nombre="SIm">
+                        <option value="">🎵 SI MENOR</option>
+                        <option value="Hay victoria">Hay victoria</option>
+                        <option value="Una zarza">Una zarza</option>
+                        <option value="Vamos escalando">Vamos escalando</option>
+                        <option value="Somos más que vencedores">Somos más que vencedores</option>
+                        <option value="Yo me alegré">Yo me alegré</option>
+                        <option value="Aunque un ejército">Aunque un ejército</option>
+                        <option value="Aunque tenga que cruzar">Aunque tenga que cruzar</option>
+                    </select>
+                </div>
+            </div>
+            <div class="seleccion-actual" id="resumen2">
+               
+            </div>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="info-footer">
+            <span>JHONDMUSIC PRODUCCIONES</span>
+        </div>
+    </div>
+
+    <script>
+        function actualizarGrupo(grupoId) {
+            const grupo = document.getElementById('grupo' + grupoId);
+            const selects = grupo.querySelectorAll('select');
+            const contador = document.getElementById('contador' + grupoId);
+            const resumen = document.getElementById('resumen' + grupoId);
+            
+            let seleccionados = 0;
+            let valores = [];
+
+            selects.forEach((select) => {
+                if (select.value !== '') {
+                    seleccionados++;
+                    select.classList.add('has-value');
+                    const nombre = select.dataset.nombre || 'Opción';
+                    // Tomar solo el nombre corto para el resumen
+                    const valorCorto = select.value.length > 20 ? select.value.substring(0, 18) + '…' : select.value;
+                    valores.push(`${nombre}: ${valorCorto}`);
+                } else {
+                    select.classList.remove('has-value');
+                }
+            });
+
+            contador.textContent = seleccionados + ' seleccionado' + (seleccionados !== 1 ? 's' : '');
+
+            if (seleccionados > 0) {
+                let texto = valores.join(' | ');
+                if (valores.length > 3) {
+                    texto = valores.slice(0, 3).join(' | ') + ' …';
+                }
+                resumen.innerHTML = `
+                    <span>📌 Selecciones:</span>
+                    <span class="valor">${texto}</span>
+                `;
+            } else {
+                resumen.innerHTML = `
+                    <span>📌 Selecciones:</span>
+                    <span class="vacio">Ninguna</span>
+                `;
+            }
+        }
+
+        document.querySelectorAll('select').forEach((select) => {
+            select.addEventListener('change', function() {
+                const grupo = this.dataset.grupo;
+                actualizarGrupo(grupo);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarGrupo(1);
+            actualizarGrupo(2);
+        });
+    </script>
+</body>
+</html>
